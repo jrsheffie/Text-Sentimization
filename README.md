@@ -1,6 +1,7 @@
 # Classifying Social Media Content Using Sentiment Analysis  
 ### IE7500, Summer 2025 - Group 5
 
+## About the Project
 Natural Language Processing (NLP) is a branch of artificial intelligence that enables machines to interpret, classify, and generate human language. One key application of NLP is sentiment analysis, which involves breaking down free-form text into tokens for easier manual analysis and categorization. This process allows for valuable insights to be drawn based on the sentiment expressed in the text.  
   
 
@@ -15,3 +16,26 @@ We expect to identify clear distinctions in sentiment across major social media 
 The insights generated from this work are not only valuable for understanding current sentiment dynamics but also serve as a foundation for future research and decision-making. For businesses, this data-driven comparison may inform where to focus community engagement or advertising efforts based on the tone of discourse. For platform designers and policymakers, the results could highlight areas for improvement in fostering healthier, more positive online environments.  
 
 In conclusion, this project contributes to a deeper understanding of how sentiment varies across major social media platforms, providing a meaningful snapshot of digital community sentiment and a foundation for ongoing exploration into the emotional climate of social media.  
+
+## Getting Started
+tk
+### Installation
+tk
+
+## Usage
+tk
+
+## Contributors
+tk 
+
+## Contact
+tk
+
+## Data 
+tk -- currently using https://huggingface.co/datasets/Exorde/exorde-social-media-december-2024-week1
+
+## Acknowledgments
+tk
+
+
+
