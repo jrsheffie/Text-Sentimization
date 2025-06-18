@@ -1,0 +1,13 @@
+#upload dataset
+!pip install -U datasets huggingface_hub fsspec
+
+!pip install datasets
+from datasets import load_dataset
+
+
+dataset = load_dataset("Exorde/exorde-social-media-december-2024-week1", split="train")
+
+
+
+# Example: View first few rows
+print(dataset)
