@@ -9,5 +9,12 @@ dataset = load_dataset("Exorde/exorde-social-media-december-2024-week1", split="
 
 
 
-# Example: View first few rows
+# Example: View the first few rows
 print(dataset)
+
+import numpy as np
+import pandas as pd
+import re
+from nltk.corpus import stopwords
+from nltk.stem.porter import PorterStemmer
+fromsklearn.feature_extraction import TfidfVectorizer
