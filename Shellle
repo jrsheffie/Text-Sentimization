@@ -122,7 +122,7 @@ print(X_test)
 
 #logistic regression
 
-model = logisticRegression(max_iter=1000)
+model = logisticRegression(max_iter=10000)
 model.fit(X_train,Y_train)
 
 #Model Eval
