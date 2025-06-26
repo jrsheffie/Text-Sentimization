@@ -5,19 +5,162 @@
 from datasets import load_dataset
 
 
-dataset = load_dataset("Exorde/exorde-social-media-december-2024-week1", split="train")
+#dataset = load_dataset("Exorde/exorde-social-media-december-2024-week1", split="train")
 
 
 
 # Example: View the first few rows
-print(dataset)
+#print(dataset)
 
 import numpy as np
 import pandas as pd
 import re
 from nltk.corpus import stopwords
 from nltk.stem.porter import PorterStemmer
-fromsklearn.feature_extraction import TfidfVectorizer
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import accuracy_score
+
+import nltk
+nltk.download('stopwords')
+
+#printing the stopwords in english
+print(stopwords.words('english'))
+
+
+#Loading the data from a csv file
+
+X_data = pd.read_csv("/content/x_en_dataset.csv",encoding = 'ISO-8859-1' )
+#facebook_data
+#Instagram_Data
+
+
+#Checking number of rows and collumns
+X_data.shape
+
+#print first 5 rows
+X_data.head()
+
+#Counting the number of missing values in the dataset
+X_data.isnull().sum()
+
+#Checking the dsitribution of the target column
+X_data["sentiment'].value_counts()
 
 
 
+#Convert the main emotion Neutral to 1
+X_data.replace({'main_emotion':{'neutral':0}},inplace=True)
+#Convert the happy emotion to 1
+X_data.replace({'main_emotion':['admiration','approval','caring','curiosity','desire','excitment','gratitude','joy','love','optimism','pride','realization','surprise']}, 1,inplace=True)
+#Convert the negative emotion to -1
+X_data.replace({'main_emotion':['anger','annoyance','confusion','disappointment','disapproval','disgust','embarrassment','excitement','fear','nervousness','remorse','sadness']},-1,inplace=True)
+
+
+# Convert the column to string type to avoid TypeError
+X_data['main_emotion'] = X_data['main_emotion'].astype(str)
+
+print(np.unique(X_data['main_emotion']))
+
+#Checking the dsitribution of the target column
+X_data['main_emotion'].value_counts()
+
+#-1 means,0 is neutral,1 is positive
+
+#Stemming is the process of reducing a word to its root word
+
+
+
+port_stem = PorterStemmer()
+
+def stemming(content):
+        stemmed_content = re.sub('[^a-zA-Z]',' ', content)
+        stemmed_content = stemmed_content.lower()
+        stemmed_content = stemmed_content.split()
+        stemmed_content = [port_stem.stem(word) for word in stemmed_content if not word in stopwords.words('english')]
+        stemmed_content = ' '.join(stemmed_content)
+        return stemmed_content
+X_data['stemmed_content']= X_data['original_text'].apply(stemming)
+X_data.head()
+print(X_data['stemmed_content'])
+print(X_data['main_emotion'])
+
+#seperating the data and label
+X= X_data['stemmed_content'].values
+Y= X_data['main_emotion'].values
+
+print(X
+print(Y)
+
+#splitting the dat into training and test
+
+X_train,X_test,Y_train,Y_test= train_test_split(X,Y,test_size =.2,stratify=Y,random_state=2)
+
+print(X.shape,X_train.shape,X_test.shape)
+
+print(X_train)
+print(X_test)
+
+
+
+
+
+
+#COnverting the textual data to numerical data
+vectorizer= TfidfVectorizer()
+
+X_train= vectorizer.fit_transform(X_train)
+X_test =vectorizer.transform(X_test)
+
+
+print(X_train)
+print(X_test)
+
+#Training the logistical Model
+
+
+#logistic regression
+
+model = logisticRegression(max_iter=1000)
+model.fit(X_train,Y_train)
+
+#Model Eval
+#AccuracyScore
+
+#Accuaracy score on training data
+X_train_prediction= model.predict(X_train)
+training_data_accuracy = accuracy_score(Y_train,X_train_prediction)
+
+print("Accuracy Score on the training data : ",training_data_accuracy)
+
+
+#Accuaracy score on test data
+X_test_prediction= model.predict(X_test)
+test_data_accuracy = accuracy_score(Y_test,X_test_prediction)
+
+print("Accuracy Score on the testing data : ",test_data_accuracy)
+
+# Model Accuracy = 68%
+
+import pickle
+
+filename = 'trained_model.sav'
+pickle.dump(model,open(filename,'wb'))
+
+#loading the saved model
+
+loaded_model = pickle.load(open('/content/trained_model.sav','rb'))
+
+X_new= X_test[200]
+print(Y_test[200])
+
+
+predicition = model.predict(X_new)
+print (prediction)
+
+if (predicition[-1]==-1):
+        print('Negative Tweet')
+
+else:
+        print('Positive Tweet')
