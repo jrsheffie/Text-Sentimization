@@ -12,7 +12,7 @@ We expect to identify clear distinctions in sentiment across major social media 
 
 The insights generated from this work are not only valuable for understanding current sentiment dynamics but also serve as a foundation for future research and decision-making. For businesses, this data-driven comparison may inform where to focus community engagement or advertising efforts based on the tone of discourse. For platform designers and policymakers, the results could highlight areas for improvement in fostering healthier, more positive online environments.  
 
-In conclusion, this project contributes to a deeper understanding of how sentiment varies across major social media platforms, providing a meaningful snapshot of digital community sentiment and a foundation for ongoing exploration into the emotional climate of social media.  
+In conclusion, this project contributes to a deeper understanding of how sentiment varies across an social media platform, providing a meaningful snapshot of digital community sentiment and a foundation for ongoing exploration into the emotional climate of social media.  
 
 ## Getting Started
 tk
@@ -37,6 +37,7 @@ This dataset is a one-week snapshot (December 1–7, 2024) of global online disc
 
 We also used the below code to clean out our data out of HTTP Urls, @ mentions using regex, and emoji symbols using regex patterns.
 Also made sure to extract letters and trim any spaces in our data.
+Then we afterwards filtered the data so we can extract information about the "X" platform.
 
 ```
 def clean_text(text):
@@ -45,6 +46,12 @@ def clean_text(text):
     text = re.sub(r"[^a-z\s]", "", text)                          # Letter Only Regex
     text = re.sub(r"\s+", " ", text).strip()                     # Space Trim Logic
     return text
+
+en_ds = ds['train'].filter(lambda example: example['language'] == 'en' and example['url'].startswith('https://x.com/') and clean_text(example.get('original_text', '')) != '')
+sample_en_ds = en_ds.shuffle(seed=42).select(range(min(5000, len(en_ds))))
+sample_en_ds = sample_en_ds.map(lambda example: {**example, 'cleaned_text': clean_text(example.get('original_text', ''))})
+sample_en_df = sample_en_ds.to_pandas()
+sample_en_df
 ```
 
 The slice of data we're using can be found [here](https://github.com/jrsheffie/Text-Sentimization/tree/main/Dataset) in our github repo
