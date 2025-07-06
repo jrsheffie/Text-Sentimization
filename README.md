@@ -17,8 +17,10 @@ The insights generated from this work are not only valuable for understanding cu
 
 In conclusion, this project contributes to a deeper understanding of how sentiment varies across major social media platforms, providing a meaningful snapshot of digital community sentiment and a foundation for ongoing exploration into the emotional climate of social media.  
 
-## Getting Started
-tk
+Model Development
+Among several models explored, we used Logistic Regression to analyze text sentiment as an initial approach due to its simplicity, interpretability, and effectiveness in binary classification—making it well-suited for identifying positive,neutral, and negative sentiment in refrence to online discourse across topics.
+
+
 ### Installation
 tk
 
