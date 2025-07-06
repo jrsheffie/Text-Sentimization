@@ -16,26 +16,26 @@ In conclusion, this project contributes to a deeper understanding of how sentime
 
 ## Getting Started
 tk
-### Installation
-tk
 
-## Usage
-tk
 
-## Contributors
-Marta Herzog
-Josiah Sheffie
-Tamara Bonheur
-Shyam Patel
-
-## Contact
-tk
 
 ## Data 
+This dataset is a one-week snapshot (December 1–7, 2024) of global online discourse, compiled and released by [Exorde Labs](https://exorde.network). It contains approximately **65.5 million posts** from public sources including social media platforms, blogs, and news websites.
 
+### 🔍 Key Features
+
+- **Scale & Scope:** ~65.5 million entries from 6,000+ public sources (e.g., X, Reddit, Bluesky, YouTube, Mastodon).
+- **Multilingual Coverage:** Content spans **122 languages**.
+- **Rich Metadata:**
+  - Sentiment score (ranging from –1 to +1)
+  - Main emotion label
+  - Primary theme (e.g., Politics, Business, Entertainment)
+  - Extracted English keywords via KeyBERT
+- **Timestamps:** All posts include UTC timestamps.
+- **Privacy-Conscious:** Author identities are anonymized using SHA-1 hashing.
 [Exorde Social Media December 2024 - Week 1 Dataset](https://huggingface.co/datasets/Exorde/exorde-social-media-december-2024-week1)
 
-We used the below code to clean out our data out of HTTP Urls, @ mentions using regex, and emoji symbols using regex patterns.
+We also used the below code to clean out our data out of HTTP Urls, @ mentions using regex, and emoji symbols using regex patterns.
 Also made sure to extract letters and trim any spaces in our data.
 
 ```
@@ -47,8 +47,11 @@ def clean_text(text):
     return text
 ```
 
-## Acknowledgments
-tk
+## Contributors
+- Marta Herzog
+- Josiah Sheffie
+- Tamara Bonheur
+- Shyam Patel
 
 
 
