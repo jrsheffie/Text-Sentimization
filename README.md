@@ -47,6 +47,8 @@ def clean_text(text):
     return text
 ```
 
+The slice of data we're using can be found [here](https://github.com/jrsheffie/Text-Sentimization/tree/main/Dataset) in our github repo
+
 ## Contributors
 - Marta Herzog
 - Josiah Sheffie
