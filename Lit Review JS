@@ -1,0 +1,29 @@
+the 2024 U.S. Presidential Race
+Samsir et al. (2024) conducted a machine learning-based sentiment analysis of public discourse on X 
+(formerly Twitter) during the final phase of the 2024 U.S. Presidential Election. 
+Using a dataset of 500 annotated tweets, the study applied fine-tuned BERT models 
+for sentiment classification (positive, neutral, negative) and 
+Latent Dirichlet Allocation (LDA) for topic modeling.
+
+Key contributions include:
+
+Sentiment Distribution: 54.2% of political tweets showed positive sentiment, 
+particularly toward major party candidates.
+
+Temporal Trends: Engagement spiked during key events (e.g., debates), 
+showing strong correlations between sentiment and campaign milestones.
+
+Topic Modeling: LDA revealed five major themes: economic policy, 
+healthcare, climate change, social justice, and foreign policy.
+
+Engagement Insights: Positive tweets gained 20–30% more interactions 
+than negative ones, though negativity spiked during controversies.
+
+The study showcases the power of transformer-based models and thematic 
+modeling to capture real-time political sentiment online. Limitations include platform bias (X-only) and a two-month observation window. Future work could explore cross-platform sentiment patterns and larger, multilingual datasets.
+
+Reference:
+Samsir, Wahyu Azhar Ritonga, Rahmad Aditiya, Ronal Watrianthos. Machine 
+Learning-Driven Sentiment Analysis of Social Media Data in the 2024 U.S. 
+Presidential Race. Bulletin of Information Technology (BIT), Vol. 5, No. 4, 2024. 
+DOI: 10.47065/bit.v5i2.1762
