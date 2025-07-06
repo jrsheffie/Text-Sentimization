@@ -3,11 +3,8 @@
 
 ## About the Project
 Natural Language Processing (NLP) is a branch of artificial intelligence that enables machines to interpret, classify, and generate human language. One key application of NLP is sentiment analysis, which involves breaking down free-form text into tokens for easier manual analysis and categorization. This process allows for valuable insights to be drawn based on the sentiment expressed in the text.  
-  
 
 Today, sentiment analysis is applied across many real-world domains, including but not limited to; gathering product feedback to support user-centered design, measuring audience reactions, capturing live feedback, and conducting competitor analysis. Companies often collect this data from social media comments and incorporate quantitative variables such as the number of likes, shares, and other related metrics. These factors contribute to analyses that support data-driven decision-making.  
-
-  
 
 This project aims to apply sentiment analysis to data collected from four widely used social media platforms in order to identify which platform, based on this small representative sample, has the highest proportion of positive sentiment. Gaining insight into the overall sentiment of each platform can help inform users who are considering joining a social media community by highlighting the general attitudes of its current users. Also, due to the scalable nature of NLP models, this approach could be retrained on a more tailored dataset such as one specific to a particular brand to analyze and better understand customer sentiment toward that brand.  
 
@@ -26,13 +23,29 @@ tk
 tk
 
 ## Contributors
-tk 
+Marta Herzog
+Josiah Sheffie
+Tamara Bonheur
+Shyam Patel
 
 ## Contact
 tk
 
 ## Data 
-tk -- currently using https://huggingface.co/datasets/Exorde/exorde-social-media-december-2024-week1
+
+[Exorde Social Media December 2024 - Week 1 Dataset](https://huggingface.co/datasets/Exorde/exorde-social-media-december-2024-week1)
+
+We used the below code to clean out our data out of HTTP Urls, @ mentions using regex, and emoji symbols using regex patterns.
+Also made sure to extract letters and trim any spaces in our data.
+
+```
+def clean_text(text):
+    text = str(text).lower()
+    text = re.sub(r"http\S+|@\w+|#\w+|[^\x00-\x7F]+", " ", text)  # Removing url using regex on HTTP, @ regex mentions, and emoji code regex patterns
+    text = re.sub(r"[^a-z\s]", "", text)                          # Letter Only Regex
+    text = re.sub(r"\s+", " ", text).strip()                     # Space Trim Logic
+    return text
+```
 
 ## Acknowledgments
 tk
