@@ -20,26 +20,84 @@ Among several models explored, we used Logistic Regression to analyze text senti
 
 
 
-## Data 
-This dataset is a one-week snapshot (December 1–7, 2024) of global online discourse, compiled and released by [Exorde Labs](https://exorde.network). It contains approximately **65.5 million posts** from public sources including social media platforms, blogs, and news websites.
+## Dataset
 
-### 🔍 Key Features
+**Multi-Source, Multi-Language Social Media Dataset (1 Week Sample)**  
+This dataset offers a rich, high-resolution snapshot of global digital discourse, collected over the period of **December 1 to December 7, 2024**, and curated by [Exorde Labs](https://www.exordelabs.com/). The sample provided here includes **5,000 English-language posts** sourced primarily from X.com (formerly Twitter), showcasing the thematic and emotional range of global online conversations.
 
-- **Scale & Scope:** ~65.5 million entries from 6,000+ public sources (e.g., X, Reddit, Bluesky, YouTube, Mastodon).
-- **Multilingual Coverage:** Content spans **122 languages**.
-- **Rich Metadata:**
-  - Sentiment score (ranging from –1 to +1)
-  - Main emotion label
-  - Primary theme (e.g., Politics, Business, Entertainment)
-  - Extracted English keywords via KeyBERT
-- **Timestamps:** All posts include UTC timestamps.
-- **Privacy-Conscious:** Author identities are anonymized using SHA-1 hashing.
-[Exorde Social Media December 2024 - Week 1 Dataset](https://huggingface.co/datasets/Exorde/exorde-social-media-december-2024-week1)
+This subset is ideal for tasks such as **sentiment analysis**, **emotion detection**, **thematic classification**, and **social media trend analysis**.
 
-We also used the below code to clean out our data out of HTTP Urls, @ mentions using regex, and emoji symbols using regex patterns.
-Also made sure to extract letters and trim any spaces in our data.
-Then we afterwards filtered the data so we can extract information about the "X" platform.
+📂 Full dataset available: [Hugging Face – Exorde December 2024 Week 1](https://huggingface.co/datasets/Exorde/exorde-social-media-december-2024-week1)
 
+---
+
+### Dataset Highlights
+
+- **Time-Stamped**: Each post is recorded with an exact UTC timestamp at the moment of posting.
+- **English-Language Sample**: This subset focuses on posts detected as English (`language="en"`).
+- **High-Quality Annotations**:
+  - Sentiment score (range: -1 to +1)
+  - Emotion label (26 emotion classes)
+  - Primary & secondary topic themes (e.g., Technology, Politics)
+  - English keyword extraction
+- **Privacy-Preserving**: User identifiers are hashed (SHA-1) or omitted when unavailable.
+- **Cleaned Content**: Each entry includes raw and cleaned versions of the text.
+
+---
+
+### Dataset Schema
+
+| Column Name       | Description                                                                 |
+|-------------------|-----------------------------------------------------------------------------|
+| `date`            | ISO timestamp of post (UTC)                                                 |
+| `original_text`   | Raw text content as posted                                                 |
+| `cleaned_text`    | Lowercased, preprocessed version of `original_text`                        |
+| `url`             | Original post URL                                                           |
+| `author_hash`     | SHA-1 hash of author ID (null for anonymous)                                |
+| `language`        | ISO 639-1 language code (always `"en"` in this sample)                      |
+| `primary_theme`   | Main classified topic from 15 thematic categories                           |
+| `secondary_themes`| List of numeric theme codes for secondary topics                            |
+| `english_keywords`| Keywords extracted via KeyBERT and statistical algorithms                   |
+| `sentiment`       | Float from -1 (negative) to 1 (positive)                                    |
+| `main_emotion`    | Emotion classification (e.g., *neutral*, *realization*, *approval*)         |
+
+---
+
+### Sample Statistics (5000 English posts)
+
+- **Date Range**: 2024-12-01 to 2024-12-07  
+- **Top Themes**: Technology, People, Politics, Sports  
+- **Most Common Emotions**: *Neutral*, *Realization*, *Approval*  
+- **Sentiment Range**: -0.89 to +0.91  
+- **Average Sentiment**: ~0.05  
+
+---
+
+### Use Cases
+
+This dataset enables a variety of research and development scenarios, including:
+
+- 📊 **Real-time sentiment and trend tracking**  
+- 🧠 **Emotion detection across events**  
+- 🔍 **Thematic analysis for news and social media**  
+- 🧾 **Text classification and NLP model benchmarking**  
+- 🛰 **Global discourse monitoring**
+
+---
+
+### Citation
+
+If using this dataset, please cite as:
+
+**Exorde Labs. (2024). Multi-Source, Multi-Language Social Media Dataset (1 Week Sample) [Data set].**  
+[https://www.exordelabs.com](https://www.exordelabs.com)
+
+
+
+### Data Cleansing
+
+We used the following below to cleanse our data from Removing URLs, cleaning mentions, and removing emoji codes.
+Also isolated it only to the platform X.
 ```
 def clean_text(text):
     text = str(text).lower()
@@ -56,7 +114,6 @@ sample_en_df
 ```
 
 You can find the jupyter notebook containing our cleaning logic [here](https://github.com/jrsheffie/Text-Sentimization/blob/main/Models/dataset_cleaning.ipynb)
-
 The slice of data we're using can be found [here](https://github.com/jrsheffie/Text-Sentimization/tree/main/Dataset) in our github repo
 
 ## Contributors
