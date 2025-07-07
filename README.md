@@ -15,7 +15,99 @@ For setting up the package dependencies for your system please refer to [require
 
 ## Model Development
 
-Among several models explored, we used Logistic Regression to analyze text sentiment as an initial approach due to its simplicity, interpretability, and effectiveness in binary classification—making it well-suited for identifying positive,neutral, and negative sentiment in refrence to online discourse across topics.
+## 🧠 Model Architectures & Training Procedures
+
+This project applies several machine learning and deep learning models to perform sentiment analysis on social media text data. The models range from traditional algorithms to state-of-the-art transformer-based models.
+
+---
+
+### 🔍 Model Choices
+
+#### 1. Logistic Regression (Baseline)
+- **Why**: Simple, interpretable, and computationally efficient.
+- **Preprocessing**: Text is vectorized using TF-IDF.
+- **Strength**: Fast training and a good baseline for comparison.
+
+#### 2. Feedforward Neural Network (FFNN)
+- **Why**: A non-linear model that captures more complex patterns than Logistic Regression.
+- **Architecture**:
+  - Dense layers with ReLU activation
+  - Dropout layers for regularization
+  - Sigmoid or softmax output layer depending on the task
+- **Training**:
+  - Loss Function: Binary Cross-Entropy
+  - Optimizer: Adam
+  - Input: TF-IDF vectors or word embeddings
+
+#### 3. Long Short-Term Memory (LSTM)
+- **Why**: Designed to handle sequential data and retain context over time.
+- **Architecture**:
+  - Embedding Layer (pretrained or trainable)
+  - One or more LSTM layers
+  - Dropout and Dense layers
+- **Training**:
+  - Loss: Binary Cross-Entropy
+  - Optimizer: Adam
+  - Handles padded sequences
+
+#### 4. BERT (Bidirectional Encoder Representations from Transformers)
+- **Why**: Pretrained on massive corpora, BERT excels at understanding contextual meaning in text.
+- **Setup**:
+  - Uses HuggingFace `transformers` library
+  - Tokenized using `bert-base-uncased` tokenizer
+  - Fine-tuned for classification by adding a dense head on top of the [CLS] token
+- **Training**:
+  - Loss: CrossEntropyLoss
+  - Optimizer: AdamW
+  - Learning rate scheduler and warm-up steps applied
+
+---
+
+### ⚙️ Training Procedures
+
+- **Preprocessing**:
+  - Lowercasing, punctuation removal, tokenization
+  - TF-IDF vectorization for classical models
+  - Word embeddings or BERT tokenizer for deep models
+  - Padding for LSTM and BERT input sequences
+
+- **Data Split**:
+  - 80/20 or 70/30 train-test split
+  - Stratified sampling to maintain class balance
+
+- **Metrics Used**:
+  - Accuracy
+  - F1 Score (macro/weighted)
+  - Confusion Matrix for qualitative analysis
+
+- **Callbacks & Techniques**:
+  - `EarlyStopping` to avoid overfitting
+  - `ReduceLROnPlateau` to adjust learning rate
+  - Validation monitoring
+
+- **Environment**:
+  - Deep learning models trained using GPU acceleration (Google Colab or CUDA environment)
+
+---
+
+### 📊 Model Comparison
+
+| Model                | Accuracy Range | F1 Score | Notes                            |
+|---------------------|----------------|----------|----------------------------------|
+| Logistic Regression | ~70–75%        | Moderate | Fast and easy to implement       |
+| FFNN                | ~75–78%        | Moderate | Sensitive to hyperparameters     |
+| LSTM                | ~78–82%        | High     | Strong at learning text sequences|
+| BERT                | ~85–90%+       | Very High| Best contextual understanding    |
+
+---
+
+### 📝 Notes
+- For reproducibility, random seeds were fixed.
+- Evaluation metrics are calculated on held-out test sets.
+- BERT models are significantly larger and require more resources but yield the best performance.
+
+---
+
 
 
 
