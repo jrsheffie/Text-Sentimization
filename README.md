@@ -10,7 +10,8 @@ By tokenizing and classifying text data, validating results with standard metric
 
 ## Setup
 
-
+All code can be rune using the provided jupyter notebook scripts with the related dataset in our dataset folder.
+For setting up the package dependencies for your system please refer to [requirements](https://github.com/jrsheffie/Text-Sentimization/blob/main/requirements.txt)
 
 ## Model Development
 
