@@ -1,17 +1,21 @@
-#upload dataset
-!pip install -U datasets huggingface_hub fsspec
 
-!pip install datasets
-from datasets import load_dataset
+"""POC model.ipynb
 
 
-#dataset = load_dataset("Exorde/exorde-social-media-december-2024-week1", split="train")
+#Using Logistic Regression Modeling to derive Text sentimization from Social Media Platforms.
 
+#Machine Learning-Driven Sentiment Analysis of Social Media Data in the 2024 U.S. Presidential Race
 
+linked below was the article I used to compare against when it came to determining the best methods and benchmarks for my model creation.
 
-# Example: View the first few rows
-#print(dataset)
+https://journal.fkpt.org/index.php/BIT/article/view/1762/768
 
+This project implements a sentiment classification pipeline aligned with the goals of Samsir et al. (2024), which analyzed public sentiment during the U.S. Presidential Race using machine learning. While the article employed a transformer-based BERT model for three-way sentiment classification, this work uses TF-IDF vectorization with logistic regression as a baseline. Future enhancements could incorporate transformer models, candidate-specific analysis, and temporal sentiment tracking to more closely replicate and build upon the original study's methodology.
+
+# Imports and Setup
+"""
+
+# --- Imports and Environment Setup ---
 import numpy as np
 import pandas as pd
 import re
@@ -28,30 +32,36 @@ nltk.download('stopwords')
 #printing the stopwords in english
 print(stopwords.words('english'))
 
+""" Load and Inspect Dataset"""
 
 #Loading the data from a csv file
 
 X_data = pd.read_csv("/content/x_en_dataset.csv",encoding = 'ISO-8859-1' )
 #facebook_data
 #Instagram_Data
-
-
 #Checking number of rows and collumns
 X_data.shape
 
-#print first 5 rows
+"""Looking at the shape of the data, I correctly have 5000 entries as meaning the data was correctly uploaded"""
+
 X_data.head()
 
-#Counting the number of missing values in the dataset
-X_data.isnull().sum()
+"""#Data Cleaning and Label Encoding
 
-#Checking the dsitribution of the target column
-X_data["sentiment'].value_counts()
+When it came to normalizing the data, I wanted to take the main emotion which was derived from sentiment to accurately sort the three main sentiments of "postive,negative,and neutral". Ultimately I created a model that ran for prediciting all three sentiments but found more prediction accuracy when the model just focused on the two sentiments of "positive and negative".
+"""
 
+#Convert the main emotion Neutral to 0
+#X_data.replace({'main_emotion':{'neutral':0}},inplace=True)
 
 
 #Convert the main emotion Neutral to 1
-X_data.replace({'main_emotion':{'neutral':0}},inplace=True)
+#X_data.replace({'main_emotion':{'neutral':1}},inplace=True)
+
+#remove neutral
+
+X_data = X_data[X_data['main_emotion'] != 'neutral']
+
 #Convert the happy emotion to 1
 X_data.replace({'main_emotion':['admiration','approval','caring','curiosity','desire','excitment','gratitude','joy','love','optimism','pride','realization','surprise']}, 1,inplace=True)
 #Convert the negative emotion to -1
@@ -63,14 +73,17 @@ X_data['main_emotion'] = X_data['main_emotion'].astype(str)
 
 print(np.unique(X_data['main_emotion']))
 
+"""As seen below, this halved the data set which mostly conveyed neutral tweets. Possibly having some way to balance the tweets without influencing the training set would lead to different results"""
+
+
+
 #Checking the dsitribution of the target column
 X_data['main_emotion'].value_counts()
 
-#-1 means,0 is neutral,1 is positive
+"""#Text Preprocessing
 
-#Stemming is the process of reducing a word to its root word
-
-
+Stemming the dataset was essential for extracting the individual words in each sentence, enabling the machine to better understand and predict sentence meaning based on the weight of each word,whether positive or negative.
+"""
 
 port_stem = PorterStemmer()
 
@@ -81,7 +94,9 @@ def stemming(content):
         stemmed_content = [port_stem.stem(word) for word in stemmed_content if not word in stopwords.words('english')]
         stemmed_content = ' '.join(stemmed_content)
         return stemmed_content
+
 X_data['stemmed_content']= X_data['original_text'].apply(stemming)
+
 X_data.head()
 print(X_data['stemmed_content'])
 print(X_data['main_emotion'])
@@ -90,10 +105,10 @@ print(X_data['main_emotion'])
 X= X_data['stemmed_content'].values
 Y= X_data['main_emotion'].values
 
-print(X
+print(X)
 print(Y)
 
-#splitting the dat into training and test
+#splitting the data into training and test
 
 X_train,X_test,Y_train,Y_test= train_test_split(X,Y,test_size =.2,stratify=Y,random_state=2)
 
@@ -102,12 +117,12 @@ print(X.shape,X_train.shape,X_test.shape)
 print(X_train)
 print(X_test)
 
+"""#Feature Extraction
 
+Converting textual data to numerical data is a crucial step in preparing the text for  this machine learning models. Because algorithms cannot process raw text, each word or token must be transformed into a numerical representation. As we learned ,this can be done using techniques such as one-hot encoding, term frequency–inverse document frequency (TF-IDF), or word embeddings like Word2Vec. These numerical formats allow models to analyze patterns, relationships, and meaning within the text data. In contrast, the article by Samsir et al. (2024) used a fine-tuned BERT model to capture complex political sentiment in Twitter data, demonstrating how transformer-based models can understand deeper contextual relationships without traditional feature engineering.
+"""
 
-
-
-
-#COnverting the textual data to numerical data
+#Converting the textual data to numerical data
 vectorizer= TfidfVectorizer()
 
 X_train= vectorizer.fit_transform(X_train)
@@ -117,12 +132,18 @@ X_test =vectorizer.transform(X_test)
 print(X_train)
 print(X_test)
 
+"""#Model Training(Logistic Regression)
+
+# Comparison with Research
+This notebook implements a baseline sentiment classification model using TF-IDF and logistic regression. In contrast, the article by Samsir et al. (2024) used a fine-tuned BERT model to capture complex political sentiment in Twitter data.
+"""
+
 #Training the logistical Model
 
 
-#logistic regression
+#Logistic Regression
 
-model = logisticRegression(max_iter=10000)
+model = LogisticRegression(max_iter=10000)
 model.fit(X_train,Y_train)
 
 #Model Eval
@@ -134,14 +155,11 @@ training_data_accuracy = accuracy_score(Y_train,X_train_prediction)
 
 print("Accuracy Score on the training data : ",training_data_accuracy)
 
-
 #Accuaracy score on test data
 X_test_prediction= model.predict(X_test)
 test_data_accuracy = accuracy_score(Y_test,X_test_prediction)
 
 print("Accuracy Score on the testing data : ",test_data_accuracy)
-
-# Model Accuracy = 68%
 
 import pickle
 
@@ -156,11 +174,168 @@ X_new= X_test[200]
 print(Y_test[200])
 
 
-predicition = model.predict(X_new)
+prediction = model.predict(X_new)
 print (prediction)
 
-if (predicition[-1]==-1):
+if (prediction[-1]==-1):
         print('Negative Tweet')
 
 else:
         print('Positive Tweet')
+
+X_new= X_test[15]
+print(Y_test[15])
+
+
+prediction = model.predict(X_new)
+print (prediction)
+
+if (prediction[-1]==-1):
+        print('Negative Tweet')
+
+else:
+        print('Positive Tweet')
+
+X_new= X_test[17]
+print(Y_test[17])
+
+
+prediction = model.predict(X_new)
+print (prediction)
+
+if (prediction[-1]==-1):
+        print('Negative Tweet')
+
+else:
+        print('Positive Tweet')
+
+X_new= X_test[3]
+print(Y_test[3])
+
+
+prediction = model.predict(X_new)
+print (prediction)
+
+if (prediction[-1]==-1):
+        print('Negative Tweet')
+
+else:
+        print('Positive Tweet')
+
+"""# Model Evaluation
+
+#Logistic regression **Model**
+"""
+
+#F1 and other metrics
+from sklearn.metrics import precision_score, recall_score, f1_score, accuracy_score
+import numpy as np
+
+
+
+Y_pred = model.predict(X_test)
+
+# Calculate and print per-class precision, recall, and F1-score
+precision_per_class = precision_score(Y_test, Y_pred, average=None, zero_division=1)
+recall_per_class = recall_score(Y_test, Y_pred, average=None, zero_division=1)
+f1_per_class = f1_score(Y_test, Y_pred, average=None, zero_division=1)
+
+# Get the unique labels
+unique_labels = np.unique(Y_test)
+
+print("Metrics per class:")
+for i, label in enumerate(unique_labels):
+    print(f"Class {label} - Precision: {precision_per_class[i]:.3f}, Recall: {recall_per_class[i]:.3f}, F1-Score: {f1_per_class[i]:.3f}")
+
+
+print("\nMacro F1 Score:", f1_score(Y_test, Y_pred, average='macro'))
+print("Weighted F1 Score:", f1_score(Y_test, Y_pred, average='weighted'))
+
+
+print("Overall Accuracy:", accuracy_score(Y_test, Y_pred))
+
+"""Confusion Matrix"""
+
+from sklearn.metrics import classification_report, confusion_matrix
+print(confusion_matrix(Y_test, X_test_prediction))
+print(classification_report(Y_test, X_test_prediction))
+
+"""Heat Map"""
+
+import matplotlib.pyplot as plt
+import seaborn as sns
+sns.heatmap(confusion_matrix(Y_test, X_test_prediction), annot=True)
+
+
+
+"""Based on the performance metrics of this Logistic Regression model, the high recall and F1 scores for positive and neutral sentiment, combined with strong training accuracy (80%) and solid generalization on positive sentiment in the test set, provide a strong foundation for further refinement. These results suggest that Logistic Regression could be a viable baseline model for sentiment analysis, and with additional tuning and preprocessing, it can help assess whether this approach is suitable for capturing more nuanced sentiment patterns in textual data.
+
+#WHEN PREDICTING NEUTRAL,POSITIVE,AND NEGATIVE
+
+#Train Accuracy 80%
+
+#WHEN PREDICTING POSITIVE,AND NEGATIVE
+#Train Accuracy 80%
+#Test Accurary 68%
+#Metrics per class:
+#Class -1:
+[Precision: 0.0.786] [Recall: 0.153] [F1-Score: 0.256]
+
+#Class 1
+[Precision: 0.697] [Recall: 0.979] [F1-Score: 0.814]
+
+#Macro F1 Score: 0.5351533535557802
+#Weighted F1 Score: 0.6278344074064516
+#Overall Accuracy: 0.703
+
+#Test Accurary 68%
+
+#Metrics per class:
+
+#Class -1:
+[Precision: 0.522]
+[Recall: 0.083]
+[F1-Score: 0.144]
+
+
+#Class 0:
+[Precision: 0.678]
+[Recall: 0.937]
+[F1-Score: 0.786]
+
+
+#Class 1
+[Precision: 0.720] [Recall: 0.476] [F1-Score: 0.573]
+
+#Macro F1 Score: 0.5009316055123301
+#Weighted F1 Score: 0.6327441201188044
+#Overall Accuracy: 0.682
+Data:
+5k rows of English language, x.com data from Hugging Face
+Pre-processed in dataset_cleaning.ipynb file.
+"""
+
+#Test Accurary 68%
+#Metrics per class:
+#Class -1 - Precision: 0.522, Recall: 0.083, F1-Score: 0.144
+#Class 0 - Precision: 0.678, Recall: 0.937, F1-Score: 0.786
+#Class 1 - Precision: 0.720, Recall: 0.476, F1-Score: 0.573
+
+#Macro F1 Score: 0.5009316055123301
+#Weighted F1 Score: 0.6327441201188044
+#Overall Accuracy: 0.682
+#Data
+#5k rows of English language, x.com data from Hugging Face
+#Pre-processed in dataset_cleaning.ipynb file.
+
+
+
+
+
+#Metrics per class:
+#Class -1 - Precision: 0.786, Recall: 0.153, F1-Score: 0.256
+#Class 1 - Precision: 0.697, Recall: 0.979, F1-Score: 0.814
+
+#Macro F1 Score: 0.5351533535557802
+#Weighted F1 Score: 0.6278344074064516
+#Overall Accuracy: 0.703016241299304
