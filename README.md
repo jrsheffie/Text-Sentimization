@@ -1,6 +1,28 @@
 # Classifying Social Media Content Using Sentiment Analysis  
 ### IE7500, Summer 2025 - Group 5
 
+## 📚 Table of Contents
+
+- [Classifying Social Media Content Using Sentiment Analysis](#classifying-social-media-content-using-sentiment-analysis)
+  - [About the Project](#about-the-project)
+  - [Setup](#setup)
+  - [Model Development](#model-development)
+    - [🧠 Model Architectures & Training Procedures](#-model-architectures--training-procedures)
+      - [🔍 Model Choices](#-model-choices)
+        - [Logistic Regression (Baseline)](#1-logistic-regression-baseline)
+        - [Feedforward Neural Network (FFNN)](#2-feedforward-neural-network-ffnn)
+        - [Long Short-Term Memory (LSTM)](#3-long-short-term-memory-lstm)
+        - [BERT (Bidirectional Encoder Representations from Transformers)](#4-bert-bidirectional-encoder-representations-from-transformers)
+      - [⚙️ Training Procedures](#-training-procedures)
+  - [Dataset](#dataset)
+    - [Dataset Highlights](#dataset-highlights)
+    - [Dataset Schema](#dataset-schema)
+    - [Sample Statistics (5000 English posts)](#sample-statistics-5000-english-posts)
+    - [Use Cases](#use-cases)
+    - [Citation](#citation)
+    - [Data Cleansing](#data-cleansing)
+  - [Contributors](#contributors)
+
 ## About the Project
 
 This project uses Natural Language Processing (NLP) to perform sentiment analysis on user-generated content from four major social media platforms — Facebook, Instagram, TikTok, and X (formerly Twitter).
