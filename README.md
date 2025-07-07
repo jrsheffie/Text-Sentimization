@@ -88,23 +88,6 @@ This project applies several machine learning and deep learning models to perfor
 - **Environment**:
   - Deep learning models trained using GPU acceleration (Google Colab or CUDA environment)
 
----
-
-### 📊 Model Comparison
-
-| Model                | Accuracy Range | F1 Score | Notes                            |
-|---------------------|----------------|----------|----------------------------------|
-| Logistic Regression | ~70–75%        | Moderate | Fast and easy to implement       |
-| FFNN                | ~75–78%        | Moderate | Sensitive to hyperparameters     |
-| LSTM                | ~78–82%        | High     | Strong at learning text sequences|
-| BERT                | ~85–90%+       | Very High| Best contextual understanding    |
-
----
-
-### 📝 Notes
-- For reproducibility, random seeds were fixed.
-- Evaluation metrics are calculated on held-out test sets.
-- BERT models are significantly larger and require more resources but yield the best performance.
 
 ---
 
