@@ -7,6 +7,11 @@ This project uses Natural Language Processing (NLP) to perform sentiment analysi
 The goal is to classify posts from each platform as **positive** or **negative**, then compare sentiment ratios to determine which platform exhibits the most positive overall tone. Special attention is given to X (Twitter) to analyze its sentiment trends and how they compare to other platforms.
 By tokenizing and classifying text data, validating results with standard metrics and manual review, we aim to provide a data-driven snapshot of sentiment across platforms. This work offers insights into user attitudes and lays the groundwork for future brand- or topic-specific sentiment studies.
 
+
+## Setup
+
+
+
 ## Model Development
 
 Among several models explored, we used Logistic Regression to analyze text sentiment as an initial approach due to its simplicity, interpretability, and effectiveness in binary classification—making it well-suited for identifying positive,neutral, and negative sentiment in refrence to online discourse across topics.
