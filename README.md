@@ -12,9 +12,11 @@
 
 ## About the Project
 
-This project uses Natural Language Processing (NLP) to perform sentiment analysis on user-generated content from four major social media platforms — Facebook, Instagram, TikTok, and X (formerly Twitter).
-The goal is to classify posts from each platform as **positive** or **negative**, then compare sentiment ratios to determine which platform exhibits the most positive overall tone. Special attention is given to X (Twitter) to analyze its sentiment trends and how they compare to other platforms.
-By tokenizing and classifying text data, validating results with standard metrics and manual review, we aim to provide a data-driven snapshot of sentiment across platforms. This work offers insights into user attitudes and lays the groundwork for future brand- or topic-specific sentiment studies.
+Natural Language Processing (NLP) is a branch of artificial intelligence that enables machines to interpret, classify, and generate human language. One key application of NLP is sentiment analysis, which involves breaking down free-form text into tokens for easier manual analysis and categorization. This process allows for valuable insights to be drawn based on the sentiment expressed in the text.  
+
+Today, sentiment analysis is applied across many real-world domains, including but not limited to: gathering product feedback to support user-centered design, measuring audience reactions, capturing live feedback and conducting competitor analysis. Companies often collect this data from social media comments and incorporate quantitative variables such as the number of likes, shares, and other related metrics. These factors contribute to analyses that support data-driven decision-making.  
+
+This project aims to apply sentiment analysis to data collected from the social media platform X in order to identify which posts have a positive or negative sentiment. Gaining insight into the sentiment of content published on X can serve as an extrapolation of the overall attitudes which users of the platform have.  
 
 
 ## Setup
